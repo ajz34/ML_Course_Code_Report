@@ -1,0 +1,870 @@
+%-----字体大小-----
+%文档的统一字体还需要手动修改
+\newlength{\fntsize}
+\fntsize=10pt
+
+%-----全局定义-----
+\documentclass[10pt,a4paper,onecolumn]{article}
+\usepackage[top=20mm,left=18mm,right=18mm,bottom=25mm]{geometry}
+\columnsep=20pt
+\usepackage[space]{ctex}
+\usepackage{fontspec,xltxtra,xunicode}
+%\usepackage[slantfont,boldfont,space]{xeCJK}
+%\usepackage{xeCJK}
+%\usepackage{CJK}
+%\usepackage{verbatim}
+
+%-----摘要设置-----
+%这里定义的摘要长度是相对大小,字体改变之后需要手动调整
+%\usepackage{abstract}
+%\renewcommand{\abstractname}{}
+%\newlength{\abstractlength}
+%\abstractlength=35\fntsize
+
+%-----字体设置-----
+%黑体、楷体使用Adobe系列,宋体、仿宋使用中易系列
+%抄录环境不适合使用中文,字体使用Ubuntu Mono,原先的字体是不合适的,因为空格是不等宽的;同时缩放倍数为0.8倍.暂无法实现行间转换.
+%对于Mathematica环境,In前空一格;在不大于100的公式环境下,换行需要预先空出9格.
+\setCJKmainfont[BoldFont=AdobeHeitiStd-Regular, ItalicFont=AdobeKaitiStd-Regular]{SimSun}
+\setCJKsansfont{AdobeHeitiStd-Regular}
+%\setmainfont{Minion Pro}
+\setCJKfamilyfont{zhhei}{AdobeHeitiStd-Regular}
+\providecommand*{\heiti}{\CJKfamily{zhhei}}
+\setCJKfamilyfont{zhfs}{FangSong}
+\providecommand*{\fangsong}{\CJKfamily{zhfs}}
+\setCJKfamilyfont{zhkai}{AdobeKaitiStd-Regular}
+\providecommand*{\kaiti}{\CJKfamily{zhkai}}
+\setCJKfamilyfont{zhsong}{SimSong}
+\providecommand*{\songti}{\CJKfamily{zhsong}}
+%\setmonofont[Scale=0.8]{Ubuntu Mono}
+\setsansfont[BoldFont=HelveticaNeueLTPro-Md]{HelveticaNeueLTPro-Roman}
+
+%-----日期设置-----
+\renewcommand{\today}{\kaiti \number\year 年 \number\month 月 \number\day 日}
+%\renewcommand{\today}{}
+
+%-----标题设置-----
+\usepackage{titlesec}
+%\titlespacing*{\section}{0\fntsize}{0.4\baselineskip}{0.3\baselineskip}
+%\titleformat*{\section}{\large\bf}
+%\titlespacing*{\subsection}{0pt}{0.6\baselineskip}{0.25\baselineskip}
+%\titlespacing*{\paragraph}{0pt}{0.2\baselineskip}{\fntsize}
+%去除Section的标号
+%\renewcommand\thesubsection{\arabic{subsection}}
+
+%-----行距设置-----
+%1.2代表的是1.5倍行距;设置为2倍行距应打入1.667
+%20pt对10.5pt，行距应表示为20pt/10.5pt=1.9048倍
+%这里
+\linespread{1.2}
+\usepackage{setspace}
+%\setlength{\parskip}{\fntsize}
+\setlength{\abovedisplayskip}{-10pt}
+\makeatletter
+%关于公式与正文行距的设置,可以参见
+%http://blog.sina.com.cn/s/blog_5e16f1770100mirv.html
+%\renewcommand\normalsize{%
+%   \@setfontsize\normalsize\@xpt\@xiipt
+%   \abovedisplayskip 2\p@ \@plus0.5\p@ \@minus0.5\p@
+%   \abovedisplayshortskip \z@ \@plus3\p@
+%   \belowdisplayshortskip 6\p@ \@plus1\p@ \@minus1\p@
+%   \belowdisplayskip 2\p@ \@plus0.5\p@ \@minus0.5\p@
+%   \let\@listi\@listI}
+%\makeatother
+
+%-----颜色设置-----
+\usepackage{xcolor}
+\definecolor{purple}{rgb}{0.6,0.1,0.9}
+\definecolor{blue}{rgb}{0.15,0.3,0.9}
+\definecolor{msorange}{rgb}{0.98,0.2,0.1}
+\definecolor{mediumgray}{rgb}{0.5,0.5,0.5}
+
+\newcommand{\mog}[1]{{\color{msorange}{#1}}}
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+\newcommand{\prle}[1]{{\color{purple}{#1}}}
+\newcommand{\mdgry}[1]{{\color{mediumgray}{#1}}}
+
+%-----书签与引用设置-----
+\usepackage[CJKbookmarks]{hyperref}
+\hypersetup{%
+  colorlinks,
+  linkcolor=red,
+  filecolor=green,
+  urlcolor=blue,
+  citecolor=blue,
+  pdfstartview=FitH,
+  bookmarksnumbered=true,
+  pdftitle="Machine Learning Reading Report (2)",
+  pdfauthor=祝震予}
+
+%-----设置旁批-----
+\setlength{\marginparwidth}{45mm}
+\setlength{\marginparpush}{2\baselineskip}
+\setlength{\marginparsep}{1.5\fntsize}
+\newcommand{\marginnote}[2]{{\kaiti\color{msorange} #1}{\marginpar{\kaiti\footnotesize #2}}}
+
+%-----设置引用-----
+\renewenvironment{quotation}
+               {\list{}{\rightmargin\leftmargin}%
+                \item\relax\kaiti\small\hspace{1.7em}}
+               {\endlist}
+
+%-----首行缩进-----
+\usepackage{indentfirst}
+\usepackage{setspace}
+\setlength{\parindent}{2\fntsize}
+
+%-----图表设置-----
+\usepackage{graphicx}
+%\usepackage[justification=centering]{caption}
+\usepackage{caption}
+\DeclareCaptionFont{heiti}{\heiti}
+\DeclareCaptionFont{kaiti}{\kaiti}
+\captionsetup{labelfont=bf, textfont=kaiti}
+\renewcommand{\figurename}{图}
+\newcommand{\reffig}[1]{图~\ref{#1}}
+\usepackage{subfigure}
+\usepackage{float}
+%使用[H]可以强制在此处插入图表
+\usepackage{multirow}
+\usepackage{makecell}
+\setcellgapes{3pt}
+\renewcommand{\tablename}{表}
+\newcommand{\reftab}[1]{表~\ref{#1}}
+%三线式表格
+\usepackage{booktabs}
+%长表格
+\usepackage{supertabular}
+%去除列表间隙 \begin{itemize}[noitemsep,nolistsep]
+%http://stackoverflow.com/questions/3275622/
+%latex-remove-spaces-between-items-in-list
+\usepackage{enumitem}
+
+%-----引用设置-----
+%\usepackage{mciteplus}
+%坑方法对cite进行底层修改
+%\renewcommand{\refname}{参考文献}
+%\usepackage{cite}
+%\makeatletter
+%\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+%\makeatother
+%坑方法对cite进行底层修改
+%\usepackage{cite}
+%\renewcommand{\refname}{\textrm{参考文献：}}
+%\makeatletter
+%\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+%\makeatother
+%参考文献的麻烦的底层修改
+%http://blog.sina.com.cn/s/blog_5e16f1770100l3kc.html
+\usepackage[square,numbers,super]{natbib}
+\addtolength{\bibsep}{-0.5 em} % 缩小参考文献间的垂直间距
+\renewcommand\bibnumfmt[1]{#1.}  %去掉文末文献列表的[]（数字或上标模式）
+\newcommand{\bibnumfont}[1]{\textit{#1}}
+
+%-----列表环境-----
+\newcommand{\items}{\item[\Square]}
+\newcommand{\itemc}{\item[\Circle]}
+
+%---------------定理环境---------------
+
+%不知道为什么iint和iiint被预先定义了@_@
+\let\iint\undefined
+\let\iiint\undefined
+%尽量不要直接定义ntheorem,而先定义amsmath(ntheorem宏包3.5节)
+%这样能保证在DisplayMath中,证毕符号同样能出现.
+\usepackage[ntheorem]{empheq}
+\usepackage[thmmarks,amsmath]{ntheorem}
+{ \theoremstyle{nonumberplain}
+  \theoremheaderfont{\heiti}
+  \theorembodyfont{\kaiti}
+  \theoremsymbol{\ensuremath{\Box}}
+  \newtheorem{proof}{证明}
+}
+{ \theoremstyle{nonumberplain}
+  \theoremheaderfont{\heiti}
+  \theorembodyfont{\kaiti}
+  \theoremsymbol{\ensuremath{\Box}}
+  \newtheorem{explain}{说明}
+}
+{ \theoremstyle{nonumberplain}
+  \theoremheaderfont{\bf}
+  \theorembodyfont{\kaiti}
+  \newtheorem{anecdote}{叙述}
+}
+{ \theoremheaderfont{\bf}
+  \theorembodyfont{\fangsong}
+  \newtheorem{principle}{原理}
+}
+{ \theoremheaderfont{\bf}
+  \theorembodyfont{\fangsong}
+  \newtheorem{theorem}{定理}
+}
+{ \theoremheaderfont{\bf}
+  \theorembodyfont{\fangsong}
+  \newtheorem{lemma}{引理}
+}
+{ \theoremheaderfont{\bf}
+  \theorembodyfont{\fangsong}
+  \newtheorem{definition}{定义}[section]
+}
+
+{ \theoremheaderfont{\bf}
+  \theorembodyfont{\fangsong}
+  \newtheorem{inference}{推论}[section]
+}
+
+%---------------数学设定---------------
+
+%-----特殊包-----
+%必须Tex2016，快速打Wick符号
+\usepackage{simpler-wick}
+
+%-----关于数学记号的说明与宏包-----
+\usepackage{amsmath}
+%允许分页显示公式
+%\allowdisplaybreaks[4]
+%斜分数可以用\sfrac表示
+%\usepackage{xfrac}
+%环路积分
+\usepackage{esint}
+%向量与矩阵
+%本文中，向量用粗斜体标记，矩阵用粗正体标记
+%\bm加粗，\hm重粗
+\usepackage{bm}
+%花体可以通过\mathscr写出
+\usepackage{mathrsfs}
+%双线字体可以通过\mathbb调出
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{dsfont}
+%可以打出圆圈中数字的宏包
+\usepackage{pifont}
+%直立体希腊字母可以通过\up...表示
+%\usepackage[Symbolsmallscale]{upgreek}
+%张量记号
+%https://tex.stackexchange.com/questions/162337/
+%double-headed-vector
+\def\shrinkage{2.1mu}
+\def\vecsign{\mathchar"017E}
+\def\dvecsign{\smash{\stackon[-1.95pt]{\mkern-\shrinkage\vecsign}%
+{\rotatebox{180}{$\mkern-\shrinkage\vecsign$}}}}
+\def\tensor#1{\def\useanchorwidth{T}\stackon[-4.2pt]{#1}{\,\dvecsign}}
+\usepackage{stackengine}
+\stackMath
+\usepackage{graphicx}
+%SI,tablenum
+\usepackage{siunitx}
+
+%-----Feynman Figures-----
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+
+\newcommand{\tikzdot}[2]{ \fill (#1,#2) circle (1pt) coordinate (#1#2); }
+
+% particle decorations borrowed from: Kjell Magne Fauske
+% http://www.texample.net/tikz/examples/feynman-diagram/
+\tikzset{
+    every node/.append style={font=\normalsize},
+    every edge/.append style={thick},
+    arrow/.style={thick, shorten >=5pt,shorten <=5pt,->},
+    state/.style={thick},
+    base/.style={double},
+    operator/.style={thick, densely dashed},
+    electron/.style={thick, postaction={decorate},
+        decoration={markings,mark=at position .56 with {\arrow[>=stealth,scale=1.5]{>}}}},
+    electron50s/.style={thick, postaction={decorate},
+        decoration={markings,mark=at position .64 with {\arrow[>=stealth,scale=1.5]{>}}}},
+    electron75/.style={thick, postaction={decorate},
+        decoration={markings,mark=at position .765 with {\arrow[>=stealth]{>}}}},
+    electron25/.style={thick, postaction={decorate},
+        decoration={markings,mark=at position .265 with {\arrow[>=stealth]{>}}}},
+}
+
+%-Flowcharts with TikZ-----
+% Basic frame
+%   https://cn.sharelatex.com/blog/2013/08/29/tikz-series-pt3.html
+% Enable newline in TikZ
+%   set |text centered| -> |align=center|
+%   https://tex.stackexchange.com/questions/24372/ how-to-add-newline-within-node-using-tikz
+% Consequtive broken line: follow the instructions on
+%   https://tex.stackexchange.com/questions/194496/ position-a-label-closer-to-a-particular-box-in-a-flow-chart-in-tikz
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, inner xsep=1em, inner ysep=1em, align=center, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, inner xsep=1em, inner ysep=1em, align=center, fill=blue!30]
+\tikzstyle{process} = [rectangle, inner xsep=1em, inner ysep=1em, align=center, fill=orange!30]
+\tikzstyle{decision} = [diamond, inner xsep=1em, align=center, fill=green!30]
+\tikzstyle{arrowflow} = [thick,->,>=stealth]
+
+%-----公式标号设置-----
+\renewcommand\theequation{\arabic{section}.\arabic{equation}}
+% 当公式号码越过section时，重新编号
+\numberwithin{equation}{section}
+%-----代码-----
+
+% 伪代码
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% http://stackoverflow.com/questions/3175105/writing-code-in-latex-document
+\usepackage{listings}
+
+%http://www.latexstudio.net/archives/625
+%http://tex.stackexchange.com/questions/73392/ how-to-make-lstlisting-look-exactly-like-the-algorithm-environment
+\renewcommand*\thelstnumber{\arabic{lstnumber}}
+\renewcommand\lstlistingname{程式}
+
+\DeclareCaptionFormat{mylst}{\hrule#1#2#3}
+\captionsetup[lstlisting]{format=mylst,labelfont=bf, singlelinecheck=off,labelsep=space,textfont=tt}
+
+% Use underscore in texttt or lstlisting: `_` instead of `\_`
+\usepackage{underscore}
+
+% highlight code in listings
+%https://tex.stackexchange.com/questions/15237/ highlight-text-in-code-listing-while-also-keeping-syntax-highlighting
+
+\usepackage[T1]{fontenc}
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%
+  \egroup
+}
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{1pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west, fill=orange!30,outer sep=0pt,inner xsep=1pt, inner ysep=0pt, rounded corners=3pt, minimum height=\ht\strutbox+1pt,#1]{\raisebox{1pt}{\strut}\strut\usebox{#2}};
+  }%
+}
+\makeatother
+
+% finally define the style
+
+% lst definitions for multiple languages
+%https://tex.stackexchange.com/questions/45711/ defining-lstset-parameters-for-multiple-languages
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+%\lstdefinestyle{basicstyle}{frame=tb,
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=fixed,
+  numbers=left,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar={\~},
+  moredelim=**[is][\btHL]{(*@}{@*)},
+% moredelim=**[is][{\btHL[fill=green!30,draw=red,dashed,thin]}]{<*@}{@*>},
+  moredelim=**[is][{\btHL[fill=green!30]}]{<*@}{@*>},
+  basewidth=0.5em,
+}
+\lstdefinestyle{Fort77}{
+language=[77]FORTRAN,
+moredelim=**[is][\btHL]{(*@}{@*)},
+moredelim=**[is][{\btHL[fill=green!30]}]{<*@}{@*>},
+}
+\lstdefinestyle{C}{
+language=C,
+moredelim=**[is][\btHL]{(*@}{@*)},
+moredelim=**[is][{\btHL[fill=green!30]}]{<*@}{@*>},
+}
+\lstdefinestyle{bash}{
+language=bash,
+moredelim=**[is][\btHL]{(*@}{@*)},
+moredelim=**[is][{\btHL[fill=green!30]}]{<*@}{@*>},
+}
+\lstdefinestyle{make}{
+language=[GNU]make,
+moredelim=**[is][\btHL]{(*@}{@*)},
+moredelim=**[is][{\btHL[fill=green!30]}]{<*@}{@*>},
+}
+
+% Change line number in code
+% https://tex.stackexchange.com/questions/264361/ skipping-line-numbers-in-lstlisting
+\let\origthelstnumber\thelstnumber
+\makeatletter
+\newcommand*\suppressnumber{%
+  \lst@AddToHook{OnNewLine}{%
+    \let\thelstnumber\relax%
+     \advance\c@lstnumber-\@ne\relax%
+    }%
+}
+
+\newcommand*\reactivatenumber[1]{%
+  \setcounter{lstnumber}{\numexpr#1-1\relax}
+  \lst@AddToHook{OnNewLine}{%
+   \let\thelstnumber\origthelstnumber%
+   \refstepcounter{lstnumber}
+  }%
+}
+\makeatother
+
+% http://blog.sina.com.cn/s/blog_5e16f1770102fcmu.html
+\usepackage{ifthen}
+% 首先，创建两个变量，一个变量用于显示在代码中标记时的序号；一个用于在显示时使用的序号：
+\newcounter{coderemarks}
+\setcounter{coderemarks}{1}
+\newcounter{codevar}
+\setcounter{codevar}{1}
+% 第二步：绘制圆形标记：文本底色为白色，圆圈填充色为黑色
+\newcommand{\circlemark}[1]{%
+  \tikz\node[text=white,font=\sffamily\bfseries,inner sep=0.2mm,draw,circle,fill=black]{#1};}
+
+% 第三步：定义makeremark命令，调用上一步的circlemark命令，将变量coderemarks作为文本，填充至标记中，并添加注释，但并不是在这里就显示注释，而是在调用showremarks命令时再显示。最后递增coderemarks变量。
+\newcommand{\makeremark}[1]{%
+  \circlemark{\arabic{coderemarks}}%
+  \global \expandafter\def \csname codebox\the\value{coderemarks}\endcsname{#1}%
+  \stepcounter{coderemarks}}
+
+% 第四步：定义showremarks命令。以一个列表的形式，将代码中所有的标记列出来，并将注释也显示出来。最后，将coderemarks和codevalue都至为1，也就是初值。这里codevalue的作用是一次显示出代码中用makeremark命令标记出的注记。详细请看下面的代码。
+\newcommand{\showremarks}{%
+  \begin{list}{\circlemark{\arabic{codevar}}} %
+    {} %
+    \whiledo{\value{codevar} < \value{coderemarks}}{ %
+      \item \expandafter\csname codebox\the\value{codevar}\endcsname %
+      \stepcounter{codevar}} %
+  \end{list} %
+  \setcounter{coderemarks}{1}%
+  \setcounter{codevar}{1}%
+}
+
+
+%-----其他设定-----
+\newcommand{\doi}[2]{\href{http://dx.doi.org/#1}{#2}}
+\usepackage[version=4]{mhchem}
+\mhchemoptions{textfontcommand=\sffamily}
+\mhchemoptions{mathfontcommand=\mathsf}
+
+%-----预定义记号-----
+\let\c\undefined
+\let\HF\undefined
+\let\i\undefined
+\let\L\undefined
+\let\C\undefined
+\let\SS\undefined
+\let\T\undefined
+
+%积分式中，d直立
+\DeclareMathOperator{\dd}{d\!}
+\newcommand{\ddtri}{\mathrm{d}^3}
+%\DeclareMathOperator{\pd}{\partial\!}
+\newcommand{\pd}{\partial}
+\DeclareMathOperator{\pdd}{\delta\!}
+\newcommand{\fracpdd}[2]{\frac{\pdd #1}{\pdd #2}}
+\newcommand{\fracpd}[2]{\frac{\pd #1}{\pd #2}}
+\newcommand{\fracdd}[2]{\frac{\dd #1}{\dd #2}}
+%括号或界定符
+\newcommand{\abs}[1]{\left \vert #1 \right \vert}
+\newcommand{\dtri}[3]{\bigl\langle #1 \big\vert#2 \big\vert #3 \bigr\rangle}
+%\newcommand{\diracdi}[2]{\left < #1 \middle \vert #2 \right >}
+\newcommand{\ddi}[2]{\bigl\langle #1 \big\vert #2 \bigr\rangle}
+\newcommand{\delec}[2]{\bigl\langle #1 \big\Vert #2 \bigr\rangle}
+\newcommand{\dspindi}[2]{\bigl[ #1 \big\vert #2 \bigr]}
+\newcommand{\dspintri}[3]{\bigl[ #1 \big\vert #2 \big\vert #3 \bigr]}
+\newcommand{\dsdi}[2]{\bigl( #1 \big\vert #2 \bigr)}
+\newcommand{\dselec}[2]{\bigl( #1 \big\Vert #2 \bigr)}
+\newcommand{\dstri}[3]{\bigl( #1 \big\vert #2 \big\vert #3 \bigr)}
+\newcommand{\bra}[1]{\bigl\langle #1 \bigr\vert}
+\newcommand{\ket}[1]{\bigl\vert #1 \bigr\rangle}
+\newcommand{\expect}[1]{\bigl\langle #1 \bigr\rangle}
+\newcommand{\anticom}[2]{\bigl[ #1 , #2 \bigr]}
+
+%-----定义衬线符号-----
+\newcommand{\ndef}[2]{\newcommand{#1}{\mathrm{#2}}}
+% HF & DFT Fundamental
+\newcommand{\x}{\mathrm{x}}           % Exchange
+\newcommand{\c}{\mathrm{c}}           % Correlation
+\newcommand{\xc}{\mathrm{xc}}         % Exchange-Correlation
+\newcommand{\s}{\mathrm{s}}           % Single
+% Self-Consistent Density
+\newcommand{\n}{\mathrm{n}}           % Non-Self-Consistent Density
+\newcommand{\J}{\mathrm{J}}           % Coulomb Integral
+\newcommand{\K}{\mathrm{K}}           % Exchange Integral
+\newcommand{\ext}{\mathrm{ext}}       % External Potential
+\newcommand{\ee}{\mathrm{ee}}         % Electron-Electron Repultion
+\newcommand{\TJV}{\mathrm{TJV}}       % Kinetic-Repulsion-Potential
+\newcommand{\gs}{\mathrm{g.s.}}       % Ground State
+% Matrix
+\newcommand{\mo}{\mathrm{o}}          % Off-Diagonal
+\newcommand{\md}{\mathrm{d}}          % Diagonal
+\newcommand{\T}{\mathrm{T}}           % Transpose
+% MBPT Theorem
+\newcommand{\N}{\mathrm{N}}           % Normalized Operator
+% Multiple Excitation
+\newcommand{\St}{\mathrm{S}}          % Singlet
+\newcommand{\Dt}{\mathrm{D}}          % Doublet
+\newcommand{\Tt}{\mathrm{T}}          % Triplet
+\newcommand{\Qt}{\mathrm{Q}}          % Quadruplet
+\newcommand{\Ht}{\mathrm{H}}          % Sextuplet
+% Sum Index Set
+\newcommand{\sud}{\mathrm{d.}}        % Sum by doubly occ/virt orbital
+\newcommand{\suo}{\mathrm{o.}}        % Sum by occupied orbital
+\newcommand{\suv}{\mathrm{v.}}        % Sum by virtual orbital
+\newcommand{\supp}{\mathrm{p.}}       % Sum by all orbital
+% Default: sum all valence and core orbial
+\newcommand{\sua}{\mathrm{a.}}        % Sum by active (valence) orbital
+\newcommand{\suc}{\mathrm{c.}}        % Sum by core (frozen) orbital
+\newcommand{\suoa}{{\mathrm{o}.\!\!^\alpha}}
+\newcommand{\suob}{{\mathrm{o}.\!\!^\beta}}
+\newcommand{\suos}{{\mathrm{o}.\!\!^\sigma}}
+\newcommand{\suot}{{\mathrm{o}.\!\!^\tau}}
+\newcommand{\suda}{{\mathrm{d}.\!\!^\alpha}}
+\newcommand{\sudb}{{\mathrm{d}.\!\!^\beta}}
+\newcommand{\suds}{{\mathrm{d}.\!\!^\sigma}}
+\newcommand{\sudt}{{\mathrm{d}.\!\!^\tau}}
+\newcommand{\suva}{{\mathrm{v}.\!\!^\alpha}}
+\newcommand{\suvb}{{\mathrm{v}.\!\!^\beta}}
+\newcommand{\suvs}{{\mathrm{v}.\!\!^\sigma}}
+\newcommand{\suvt}{{\mathrm{v}.\!\!^\tau}}
+
+%-----定义非衬线符号-----
+\newcommand{\sdef}[2]{\newcommand{#1}{\textsf{#2}}}
+% HF & DFT Fundamental
+\newcommand{\HF}{\textsf{HF}}         % Hartree-Fock
+\newcommand{\RHF}{\textsf{RHF}}       % Restricted Hartree-Fock
+\newcommand{\UHF}{\textsf{UHF}}       % Unrestricted Hartree-Fock
+\newcommand{\ROHF}{\textsf{ROHF}}     % Restricted Open-Shell Hartree-Fock
+\newcommand{\DFA}{\textsf{DFA}}       % Density Functional Approximation
+\newcommand{\DFT}{\textsf{DFT}}       % Density Functional Theory
+\newcommand{\KS}{\textsf{KS}}         % Kohn-Sham
+\newcommand{\GKS}{\textsf{(G)KS}}     % Generalized Kohn-Sham
+\newcommand{\HK}{\textsf{HK}}         % Hohenberg-Kohn
+\newcommand{\Hyb}{\textsf{Hyb}}       % Hybrid
+\newcommand{\GLII}{\textsf{GL2}}      % Gorling-Levy Perturbation (II)
+\newcommand{\WFT}{\textsf{WFT}}       % Wave-Function Method
+\newcommand{\SCF}{\textsf{SCF}}       % Self-Consistent-Field
+\newcommand{\Ref}{\textsf{ref}}       % Reference State
+% Post-HF
+%   CI
+\newcommand{\CI}{\textsf{CI}}
+\newcommand{\CID}{\textsf{CID}}
+\newcommand{\CISD}{\textsf{CISD}}
+\newcommand{\CIDQ}{\textsf{CIDQ}}
+%   MP
+\newcommand{\MPO}{\textsf{MP0}}
+\newcommand{\MPI}{\textsf{MP1}}
+\newcommand{\MPII}{\textsf{MP2}}
+\newcommand{\MPIII}{\textsf{MP3}}
+\newcommand{\MPIV}{\textsf{MP4}}
+\newcommand{\MPV}{\textsf{MP5}}
+\newcommand{\MPn}{\textsf{MPn}}
+\newcommand{\PTII}{\textsf{PT2}}
+\newcommand{\PTIIP}{\textsf{PT2+}}
+%   CC
+\newcommand{\CC}{\textsf{CC}}
+\newcommand{\CCD}{\textsf{CCD}}
+\newcommand{\CCSD}{\textsf{CCSD}}
+\newcommand{\CCSDT}{\textsf{CCSDT}}
+%   Pair Electron Theory
+\newcommand{\IEPA}{\textsf{IEPA}}     % Independent Electron Pair Approximation
+\newcommand{\CEPAO}{\textsf{CEPA(0)}} % Coupled Electron Pair Approximation
+\newcommand{\CEPAI}{\textsf{CEPA(1)}}
+\newcommand{\CEPAII}{\textsf{CEPA(2)}}
+\newcommand{\CEPAIII}{\textsf{CEPA(3)}}
+\newcommand{\CEPAn}{\textsf{CEPA(n)}}
+\newcommand{\LCCD}{\textsf{LCCD}}     % Linearized CCD
+%   MP2 Modification
+\newcommand{\MPcr}{\textsf{MP2/cr}}   % Corrected MP2
+\newcommand{\MPcrI}{\textsf{MP2/cr-\{I\}}}
+\newcommand{\MPcrII}{\textsf{MP2/cr-\{II\}}}
+\newcommand{\MPcrIII}{\textsf{MP2/cr-\{III\}}}
+\newcommand{\MPcrIV}{\textsf{MP2/cr-\{IV\}}}
+\newcommand{\DCPT}{\textsf{DCPT2}}    % Degeneracy Corrected MP2
+% DFT
+%   LDA
+\newcommand{\LSD}{\textsf{LSD}}       % Local Spin Density
+\newcommand{\LSDA}{\textsf{LSDA}}     % Local Spin Density Approximation
+\newcommand{\LDA}{\textsf{LDA}}       % Local Density Approximation
+\newcommand{\SVWN}{\textsf{SVWN}}
+\newcommand{\VWN}{\textsf{VWN}}
+%   GGA, Hybrid
+\newcommand{\GGA}{\textsf{GGA}}       % Generalized Gradient Approximation
+\newcommand{\LYP}{\textsf{LYP}}
+\newcommand{\BIIILYP}{\textsf{B3LYP}}
+\newcommand{\PBE}{\textsf{PBE}}
+%   Double-Hybrid
+\newcommand{\XYGIII}{\textsf{XYG3}}
+\newcommand{\BIIPLYP}{\textsf{B2PLYP}}
+\newcommand{\MCIIIBB}{\textsf{MC3BB}}
+\newcommand{\xDH}{\textsf{xDH}}
+% Gradient
+\newcommand{\sx}{\textsf{x}}          % x Derivative
+\newcommand{\scx}{\textsf{(x)}}       % x Core (Skeleton) Derivative
+\newcommand{\snx}{\textsf{[x]}}       % x (not all) Derivative
+\newcommand{\smx}{\textsf{\{x\}}}     % x MO Coefficient Derivative
+\newcommand{\vo}{\textsf{v-o}}        % Virtual-Occupied
+\newcommand{\ov}{\textsf{o-v}}        % Occupied-Virtual
+\newcommand{\oo}{\textsf{o-o}}        % Occupied-Occupied
+\newcommand{\sv}{\textsf{v}}          % Virtual
+\newcommand{\so}{\textsf{o}}          % Occupied
+\renewcommand{\sp}{\textsf{p}}        % All
+% Concepts
+\newcommand{\He}{\textsf{He}}         % Helium
+\newcommand{\LUMO}{\textsf{LUMO}}
+\newcommand{\HOMO}{\textsf{HOMO}}
+\newcommand{\SOMO}{\textsf{SOMO}}
+\newcommand{\IP}{\textsf{IP}}         % Ionization Potential
+\newcommand{\EA}{\textsf{EA}}         % Electron Affinity
+\newcommand{\occ}{\textsf{occ}}       % Occupied Orbital
+\newcommand{\virt}{\textsf{virt}}     % Virtual Orbital
+\newcommand{\SS}{\textsf{SS}}         % Single-Spin
+\newcommand{\OS}{\textsf{OS}}         % Opposite-Spin
+\newcommand{\tot}{\textsf{tot}}       % Total
+\newcommand{\AO}{\textsf{AO}}         % Atomic Orbital
+\newcommand{\MO}{\textsf{MO}}         % Molecular Orbital
+\newcommand{\NO}{\textsf{NO}}         % Natural Orbital
+
+%---------设定区结束----------
+\begin{document}
+\bibliographystyle{JAmChemSoc}
+
+%---------预定设置区----------
+\title{%
+  \heiti \huge \vspace{-25pt} 机器学习理论：代码报告}
+
+\author{\kaiti \large 17 级化学系\hspace{\fntsize}物理化学\hspace{\fntsize}祝震予\hspace{\fntsize}17110220038}
+
+  \maketitle
+\vspace{-10pt}
+
+%\tableofcontents
+
+%---------正  文  区----------
+
+这是一个关于 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}与 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的代码报告。
+
+到目前为止，Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的数据相信是可重复的，只是现在尚未测试所有的特征向量构造方法、以及代码的运行效率不是很高。而关于 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}，现在仍然没有找到重复的方法。关于这两份工作，后文将会详细叙述情况。
+
+\section{Faber 文章重复}
+
+Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章并没有给出源代码，但给出计算所需的特征向量。因此，我尝试自己写代码验证结果。我只成功重复了 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章中的 Table 3 中的 CM (\underline Coulomb \underline Matrix) 特征方法下的 BR(\underline Bayesian Ridge \underline Regression)、EN (\underline Elastic \underline Net)、RF (\underline Random \underline Forest) 方法。尽管重复出的数据很少，但相信重复其它数据都是只要愿花时间就能解决的问题（除去深度学习的 GC、GG 方法，以及各种特征向量的获取也并非简单）。除此之外，BoB (\underline Bag \underline of \underline Bonds) 特征向量也成功得到。详细的重复结果列举如下。
+
+\subsection{QM9 数据集信息提取、CM 与 BoB 特征向量获得}
+
+\subsubsection{文件列表}
+
+这里以 QM9 数据集中第 106080 号原子的特征向量提取作为示例；其它原子类同。关于这部分工作，放置在目录 \verb|Faber_Code/01-Feature_Vector| 下。关于其中的文件，列举如下：
+\begin{itemize}[noitemsep]
+  \item \verb|ReadXYZ.ipynb|：主要代码示例。可执行的 Jupyter Notebook 文档。
+  \item \verb|ReadXYZ.html|：由 \verb|ReadXYZ.ipynb| 保存后的网页文档。
+  \item \verb|dsgdb9nsd_106080.xyz|：QM9 数据集中，第 106080 号分子的源文件。这是 \verb|ReadXYZ.ipynb| 执行时所需要的文件之一。
+  \item \verb|mol_106080.gjf|：手工修改的 QM9 集的 106080 号分子的结构文件。这份文件应当可以被现在最为流行的量子化学计算软件之一 Gaussian 所读取并进行 HF/STO-3G 计算；同时也应可以被 GaussView 软件所读取。
+  \item \verb|qm9_106080.png|：QM9 集的 106080 号分子结构。由 \verb|mol_106080.gjf| 放入 GaussView 产生。
+  \begin{itemize}[noitemsep, nolistsep]
+    \item 其中红色代表氧原子、白色氢原子、灰色碳原子。
+    \item 尽管图中的双键确是 \verb|dsgdb9nsd_106080.xyz| 中 SMILES 码给出的双键，但由于 GaussView 对何时分子成双键的定义未必与其它软件相同，所以由 GaussView 给出的键级信息只能作为直观参考，不能作为代入实际计算的特征。
+  \end{itemize}
+  \item \verb|qm9_106080|：从 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章 SI (Supporting Information) 附件中截取出的 106080 号原子的不同特征表示下的特征向量。我们希望能从 \verb|dsgdb9nsd_106080.xyz| 文件的信息给出特征向量，并与这份文件夹下的文件作比较，确定我们给出的特征向量正确。
+  \item \verb|BOB_Example|：部分分子的，从 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章 SI 中提取处的 BoB 特征向量。关于为何要选取这些文件，已经在 \verb|ReadXYZ.ipynb| 有所说明。
+\end{itemize}
+
+\subsubsection{补充的说明}
+
+关于如何从 QM9 数据集读取 CM、BoB 特征向量的方法，已经在 \verb|ReadXYZ.ipynb| 中有比较详实的说明了。这里只是一些补充的说明或 \verb|ReadXYZ.ipynb| 说得不详细的补充。
+
+之所以会选择 CM、BoB 特征向量作为被重复的示例特征向量，是因为这些特征向量比较容易得到。CM 所需要的信息不过原子间的相对位置、以及它们的核电荷数；BoB 相对于 CM 额外多出了对于构成分子键的原子对的分类整理。其它的特征向量多少会涉及到 UFF (\underline Universal \underline Force \underline Field) 势函数、L-J (\underline Lennard-\underline Jones) 势函数、Morse 势函数，以及成键的判断、键级的判断等。这些判断可能是不简单，或者是需要依靠其它化学信息学软件支持的，因为单纯的分子原子位置信息也许不足以下判断。
+
+关于 CM 特征方法，需要补充的一句是，尽管文章中提及，如果将特征向量作为 $ 30 \times 30 $ 的矩阵，那么其向量的行列排序将是其 $ L_1 $ 范数的大小逆序；但实际上更可能是 $ L_2 $ 范数的大小逆序：因为对于 106080 号分子，$ L_1 $ 范数大小逆序无法给出能与 \verb|qm9_106080/CM_106080.txt| 相同的特征向量。
+
+另外需要说明的是，CM 特征向量的定义在 Rupp \emph{et al.} (PRL 2012)\citep{Rupp-Lilienfeld.PRL.2012.108}与在 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的定义不同。Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的向量中包含了矩阵的所有信息，而 Rupp \emph{et al.} (PRL 2012)\citep{Rupp-Lilienfeld.PRL.2012.108}中则只包含了矩阵的本征值向量信息。
+
+关于 BoB 特征方法，需要作补充的是：其一，BoB 特征向量确实应该比 CM 大（是指向量长度，若论非零值应当是 CM 更多一些），但我想也不至于到 2209 个数（相比之下，CM 为 900）。我认为 BoB 方法下，有效的（对于任一分子而言必不为零的）数组大小应不大于 1150。尽管没有做过测试，但我相信如果代入 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章 SI 的 BoB 特征向量，恐怕一半内存是被浪费的。
+
+第二，尽管原则上 BoB 特征向量中所有值应都能与 CM 特征向量的某些元素相等；但实际上在 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的处理中，关于不同原子之间的库伦排斥势 $ M_{AB} = Z_A Z_B / |\bm R_A - \bm R_B| $ 的计算上，两者对于距离采用的单位不同，BoB 采用 a.u.（Bohr 半径 0.529 \AA 为单位），而 CM 采用 \AA（Angstrom，$ 10^{-10} $ m）为单位。同时，相同原子间的向量元 $ M_{AA} = 0.5 Z_A^{0.24} $ 则使用了相同的数值。换言之，对于 CM 与 BoB 方法，它们的 $ M_{AA} $ 与 $ M_{AB} $ 量纲其实是不一样的。这对于 BR、EN 等线性模型而言可能不重要，但对于 KRR 等需要计算特征向量间相似度（譬如 RBF 核下，$ d(\bm M - \bm M') = \Vert M - M' \Vert_2 $）的方法，不同的单位换算可能会导致不同的相似标度。因此，我认为这意味着 CM 与 BoB 不算是性质上良好的特征向量。
+
+\subsection{Table 3 部分数据重复}
+
+这部分工作的代码放置在 \verb|Faber/02-Repeat_Table3| 中。这里重复了所有 13 个性质的 CM 特征向量下 BR、EN、RF 数据。KRR (\underline Kernel \underline Ridge \underline Regression) 数据由于本身计算量偏大、以及超参数筛选过程较为漫长，所以现在没有给出结果。训练过程使用 Python 包 sklearn。程序环境为 Red Hat 6，Python 3.6, Anaconda 1 月 20 日左右的最新版本（以 \verb|conda update all| 更新）。计算使用 12 核、24 线程的 Intel Xeon E5 系列处理器。
+
+\subsubsection{文件列表}
+
+\begin{itemize}[noitemsep]
+  \item 主程序文件
+  \begin{itemize}[noitemsep, nolistsep]
+    \item \verb|test_BR.py|：测试 BR、EN 的主程序。尽管 RF 部分的代码也在其中，但程序将因为 \verb|FOut| 文件关闭而在 101 行报错。该程序的输出文件为 \verb|CM-BR-EN-RF.txt|。其文件名中的“\verb|RF|”不代表数据中由 RF 的结果。
+    \item \verb|test_RF.py|：测试 RF 的主程序。该程序的输出文件为 \verb|CM-RF.txt|。
+    \item \verb|test_KRR.py|：测试 KRR 的主程序。尽管程序能运行，但由于耗时太长，现在没有结果。
+  \end{itemize}
+  \item 辅助程序文件
+  \begin{itemize}[noitemsep, nolistsep]
+    \item \verb|util.py|：一些通用的小函数。
+    \item \verb|feature.py|：从 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}提供的 SI 中读取 CM 特征向量。这里我没有用到上一小节中提到的直接从 QM9 分子集中获得 CM 特征向量的方法。
+    \item \verb|prop.py|：读入 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的 SI 中提供的作过处理的数据作为训练过程中的目标值。
+    \item \verb|fold.py|：读入 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}提供的 10-fold 中每一个 fold 的训练、验证集，并返回由对象 \verb|sklearn.model_selection.PredefinedSplit| 组成的列表。
+    \item \verb|fit.py|：确定训练方法的及其参数。同时也返回训练与测试误差、耗时。
+  \end{itemize}
+  \item 其它输出与结果文件
+  \begin{itemize}[noitemsep, nolistsep]
+    \item \verb|CM-BR-EN-RF.txt|：BR、EN 训练误差与耗时。
+    \item \verb|CM-RF.txt|：RF 训练误差与耗时。
+    \item \verb|Table_3_Repeat.xlsx|：Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}Table 3 数据重复的总结。
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{数据重复情况}
+
+表 \ref{tab.1} 列举了文中的数值、我所计算得到的数值，以及两者之间的比例。可以看出绝大部分数据的误差不超过 3\%。这应当表明我所执行的程序是正确的。
+
+\begin{table}[ht]
+  \centering
+  \makegapedcells
+  \fangsong\footnotesize
+  \begin{tabular}{c c | c c c | c c c | c c c}
+    \Xhline{1.2pt}
+      \multicolumn{2}{c |}{性质} & 
+      \multicolumn{3}{c |}{BR} & \multicolumn{3}{c |}{EN} & \multicolumn{3}{c}{RF} \\
+      \hline
+      物理量 & 单位 & 原文 & 计算 & 比例 & 原文 & 计算 & 比例 & 原文 & 计算 & 比例 \\
+    \Xhline{0.8pt}
+      $ \mu $ & Debye 
+      & 0.844 & 0.8441 & 0.9998
+      & 0.844 & 0.8443 & 0.9997
+      & 0.608 & 0.6007 & 1.0121 \\
+      $ \alpha $ & $ \mathrm{Bohr}^3 $ 
+      & 1.33 & 1.3332 & 0.9976
+      & 1.33 & 1.3337 & 0.9972
+      & 1.04 & 1.0139 & 1.0258 \\
+      $ \varepsilon_\mathrm{HOMO} $ & eV
+      & 0.338 & 0.3375 & 1.0014
+      & 0.338 & 0.3376 & 1.0011
+      & 0.208 & 0.2039 & 1.0199 \\
+      $ \varepsilon_\mathrm{LUMO} $ & eV 
+      & 0.632 & 0.6315 & 1.0009
+      & 0.631 & 0.6311 & 0.9999
+      & 0.302 & 0.2959 & 1.0206 \\
+      $ \Delta \varepsilon $ & eV 
+      & 0.723 & 0.7228 & 1.0003
+      & 0.722 & 0.7221 & 0.9998
+      & 0.373 & 0.3652 & 1.0214 \\
+      $ \big\langle R^2 \big\rangle $ & $ \mathrm{Bohr}^2 $ 
+      &  & 55.512 & 
+      &  & 55.515 & 
+      &  & 44.293 &  \\
+      ZPVE & eV 
+      & 0.0265 & 0.02647 & 1.0011
+      & 0.0265 & 0.02647 & 1.0011
+      & 0.0199 & 0.01948 & 1.0218 \\
+      $ U_0 $ & eV 
+      & 0.911 & 0.9107 & 1.0003
+      & 0.911 & 0.9106 & 1.0004
+      & 0.431 & 0.4201 & 1.0259 \\
+      $ U $ & eV
+      &  & 0.9119 & 
+      &  & 0.9118 & 
+      &  & 0.4228 &  \\
+      $ H $ & eV 
+      &  & 0.9120 & 
+      &  & 0.9119 & 
+      &  & 0.4226 &  \\
+      $ G $ & eV 
+      &  & 0.9093 & 
+      &  & 0.9093 & 
+      &  & 0.4140 &  \\
+      $ C_v $ & $ \mathrm{kCal} \cdot \mathrm{Mol}^{-1} $
+      & 0.907 & 0.9062 & 1.0008
+      & 0.906 & 0.9060 & 1.0000
+      & 0.777 & 0.7603 & 1.0219 \\
+      $ \omega_1 $ & $ \mathrm{cm}^{-1} $
+      & 131 & 131.44 & 0.9967
+      & 131 & 131.37 & 0.9972
+      & 13.2 & 12.71 & 1.0385 \\
+    \Xhline{1.2pt}
+  \end{tabular}
+  \caption{Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}Table 3 部分数据重复情况}
+  \label{tab.1}
+  \vspace{-0.5\baselineskip}
+\end{table}
+
+\subsubsection{补充的说明}
+
+由于每个程序都不大，程序的文档都有所注释，所以这里也不作太多叙述。
+
+这个程序中，使用了许多绝对路径指定了文件的位置，包括至少下述的几行代码：
+\begin{itemize}[noitemsep]
+  \item \verb|fold.py| Line 30：10-fold 的每个 fold 训练、验证、测试集分子序号；
+  \item \verb|test_*.py| Line 42：CM 特征向量的集合；
+  \item \verb|test_*.py| Line 48：目标值（处理后的分子性质）集合。
+\end{itemize}
+如果要实现这段代码，需要手动将这些文件路径改变。同时，这些文件也是不包含在附件中发送过来的代码中。这些文件可以从 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的 SI 提供的 \href{https://drive.google.com/open?
+  id=0Bzn36Iqm8hZscHFJcVh5aC1mZFU}{Google 网盘}中得到，需要翻墙下载、解压以及整理。
+
+对于每个性质，其目标值都经过平均值归零与标准差归一的处理。需要注意的是，这种处理是对所有有效的训练、验证、测试集中的 131029 个分子进行的，并没有排除测试集。这意味着实际的训练、验证集的目标值分布可能仍然不是 $ \mathcal{N}(0,1) $，尽管多半也比较接近了。
+
+在上述表格中的误差均为 MAD (\underline Mean \underline Absolute \underline Deviation)；而在 \verb|CM-*.txt| 文件中，所有表示时间的单位为秒。EN 方法之所以较慢，可能还与其进行了超参数调整有关。
+
+KRR 方法的耗时与误差没能打出。但在监视程序运行的过程中，发现对于 BR、EN、RF 过程中，大多数时候 CPU 占用为 2300\%，但 KRR（\verb|sklearn.kernel_ridge.KernelRidge|）大多数时候为 100\%，较少时间实际有并行。在我写的代码中，没有进行过任何并行优化；所有并行优化由 \verb|sklearn| 包提供。
+
+\section{Gilmer 文章重复}
+
+这篇文章的作者也是 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}的共同作者。我认为 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}（Google）迄今为止没有提供过任何代码、以及验证与测试集的信息。
+
+在 1 月 23 日左右，我在网上找到 Microsoft 对于这份工作的代码 \href{https://github.com/Microsoft/gated-graph-neural-network-samples}{gated-graph-neural-network-samples}（GG-NN 方法）。这部分代码看起来在他们的 Repository 现在仍然在更新中。
+
+关于这段代码，我现在尚未能理解。这主要是因为我本身对 Python 的熟悉程度远远不够，以及对 Tensorflow 也不很了解。由于我平时使用的编程语言是 \verb|FORTRAN77|，所以在写上一篇文章的工作重复时，使用的也是带有 \verb|FORTRAN77| 风格的面向过程的编程习惯。
+
+该程序可以在我自己的电脑上运行，环境为 Ubuntu 16.04 LTS，Anaconda 最新（Python 3.5, Tensorflow 1.5，以及 \verb|docopt|、\verb|RDKit| 包）。使用 CUDA 8.0 进行 GPU 计算，GPU 为 GeForce GTX 1050 Ti。
+
+\subsection{文件目录}
+
+附件并不包含所有的 Microsoft 提供的代码，部分代码也有改变。其中的文件目录为：
+\begin{itemize}[noitemsep]
+  \item \verb|get_data.py|：数据集预处理。
+    \begin{itemize}[noitemsep, nolistsep]
+      \item 直接读入 QM9 数据集。Microsoft 提供代码中，是从提供数据集的\href{https://ndownloader.figshare.com/files/3195389}{网站}上直接下载。由于该网站在国内的下载速度偏慢，于是我稍改了这段代码，使得程序可以直接读入本地文档。若要使用这段代码，需要在该目录下新建 \verb|data| 文件夹，并将下载好的 \verb|dsgdb9nsd.xyz.tar.bz2| 文件放置于其中。
+      \item 其输出将是文件 \verb|molecule_train.json| 与 \verb|molecule_valid.json|。这两个文件将是后续训练过程的输入文件。
+    \end{itemize}
+  \item \verb|get_data.ipynb|：我对 \verb|get_data.py| 的注解。这是一份可执行的 Jupyter Notebook 文档，执行后的效果应当与 \verb|get_data.py| 相同。它同时被另存为网页版的 \verb|get_data.html|。
+  \item \verb|valid_idx.json|：验证集的分子序号指标集。
+  \item \verb|chem_tensorflow_dense.py|：可执行的训练程序。其训练文档输出为 \verb|2018-01-25-12-21-43_9839_*|；其屏幕输出流到 \verb|chem_tensorflow_dense.out|，屏幕错误流输出到 \verb|chem_tensorflow_dense.err| 中。其中第 48、49 行是我补上的，可能是原来程序的一个 bug。
+  \begin{itemize}[noitemsep, nolistsep]
+    \item \verb|*|$ = $\verb|log.json|：里面存有每次训练过程的结果与耗时。
+    \item \verb|*|$ = $\verb|model_best.pickle|：存储了学习结果，该结果应可以被再利用。这是二进制文件。
+    \item \verb|*|$ = $\verb|params.json|：训练过程所选用的与优化出的超参数。
+    \item \verb|chem_tensorflow_dense.err|：包含了比 \verb|log.json| 更多的训练结果信息。
+  \end{itemize}
+  \item \verb|chem_tensorflow.py|：底层的程序。\verb|chem_tensorflow_dense.py| 的执行需要调用这个程序。这个程序的主要目标是完成数据读取、预处理、屏幕输出、文件输出等，并且搭出虚函数，即构成一个完整的程序框架，包括了训练过程与构建网络。除此之外的个性化的方法都是由 \verb|chem_tensorflow_dense.py| 完成的。
+  \item \verb|utils.py|：底层的小函数。
+  \item \verb|chem_tensorflow_dense.ipynb|：我对 \verb|chem_tensorflow_dense.py| 所作的笔记。这份 Jupyter Notebook 是不可执行的。它也被另存为网页版的  \verb|chem_tensorflow_dense.html|。但这份笔记非常不完全，没有关于算法的描述，大多数是对于其中 Python 语法的注解。
+  \item \verb|README.md|：这是 \href{https://github.com/Microsoft/gated-graph-neural-network-samples}{Microsoft 在 Github} 上的文件。
+\end{itemize}
+
+\subsection{结果说明}
+
+首先，从效率上讲，它确实速度不慢。整个学习过程从输出文件的生成时间上看，是约 40 分钟。这比 CM 方法下的 RF（120 分支树）快上一些（大约 1-2 小时）；并且需要注意到 GG-NN 方法使用的是微机的游戏版 GPU，而 CM/RF 方法用的是 24 线程的服务器级 CPU。
+
+训练的对象是 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}文章中提及的 13 个性质中的其中一个（偶极 $ \mu $）。特征向量与邻接矩阵看起来不包含键长信息，但包含键级的信息，预期其结果将不会很好。特征向量与邻接矩阵的构成是直接通过 \verb|RDKit| 包读取 SMILES 产生的，所以实际上对于 \href{https://github.com/Microsoft/gated-graph-neural-network-samples}{Microsoft 的程序}，他们真正需要的输入并不是完整的 QM9 数据集，而只要分子的 SMILES 码以及分子的性质结果即可。
+
+训练、验证、测试集上，看起来是 Microsoft 并没有使用测试集，而把验证集的结果作为测试集的结果输出；验证集大小为 13082 分子，是 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}提及的总有效分子的 1/10，且分子固定；但训练集是 QM9 分子集 133885 个分子去除验证集的余下的分子。如果我没有理解错，那么 Microsoft 并没有排除 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}推荐排除的 3056（3054 若包含两个线性振动分子）个无效分子、以及没有通过 SMILES 测试的 367 个分子。所以这个训练、验证集定义上仍然可能需要改进。
+
+训练结果上，其最佳的结果为 4.85047 倍“Chemical Accuracy”（可从 \verb|chem_tensorflow_dense.err| 的 Line 48633 找到）；而对 $ \mu $ 物理量而言，其“Chemical Accuracy”根据 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13} Table 4 中的定义为 $ 0.1 $ Debye。这很显然不是一个很好的结果，至少不像 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70} Table 2 中 GG-NN 方法的结果 1.22 倍“Chemical Accuracy”那么好。因此，这个程序本身就不能与 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}文章的数据核准。原因可能各种各样，包括邻接矩阵没有键长信息，训练、验证、测试集不同（Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70} 则是随机 10000 分子的验证集与 10000 分子的测试集），超参数设置不同，等等。
+
+在 \href{https://github.com/Microsoft/gated-graph-neural-network-samples}{Microsoft 的 Github} 上，除了上述的 \verb|chem_tensorflow_dense.py| 外，还有其它三个程序也能进行计算；但我曾经执行过两个，\verb|chem_tensorflow_sparse.py| 无法分配空间，\verb|chem_tensorflow_async.py| 用尽内存后报错（8 GB 内存，4 GB 显存与 4 GB Swap 空间）。
+
+\section{未尽事项}
+
+我本人的专业方向是量子化学中的电子结构，直博一年级学生。之前所完成的工作，主要是进行非自恰双杂化 DFT 方法（这两篇文章的机器学习方法所挑战的对象为杂化 DFT 方法）的学习、以及其性质结果的理论导出。事实上，对于机器学习在计算小分子性质上，做理论的人之所以会有所反感，我想是因为机器学习不是一个解释性的方法，而是归纳性的方法。因此，机器学习在理论界（特别是我的专业方向）不能指望会产生实质贡献，但在工程界也许会大放异彩。
+
+Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}与 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章的标题确实夺人眼球。如果这项机器学习技术成熟，而高精度计算方法所计算得的数据集性质也产生之后，它可能对理论界有毁灭性的冲击——越来越少的人会期望用理论方法进行性质计算，因为理论方法的开发周期太长。同时，理论方法的实际根基通常就是基于 Hartree 或 Hartree-Fock 近似到真实 Schr\"odinger 方程的改进，而这个改进的过程或多或少有经验的成分在里面，谈不上是严格理论的。在这些理解下，我想我需要对这项技术有所了解。
+
+关于 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}的工作，我可能会持续关注与学习。不久后我将会在我的网站 \href{https://ajz34.github.io/post/Faber-Repetition/}{https://ajz34. github.io/post/Faber-Repetition/} 上传这部分的结果，并可能在将来更新这些内容。
+
+\bibliography{./bib/Machine\string_Learning.bib}
+
+\end{document}

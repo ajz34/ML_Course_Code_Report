@@ -1,0 +1,1 @@
+{"batch_size": 256, "task_sample_ratios": {}, "num_timesteps": 4, "random_seed": 0, "hidden_size": 100, "num_epochs": 3000, "out_layer_dropout_keep_prob": 1.0, "learning_rate": 0.0001, "task_ids": [0], "clamp_gradient_norm": 1.0, "tie_fwd_bkwd": true, "patience": 25, "use_graph": true, "graph_state_dropout_keep_prob": 1.0}

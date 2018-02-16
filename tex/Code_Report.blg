@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: Code_Report.aux
+The style file: JAmChemSoc.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: ./bib/Machine_Learning.bib.bib
+You've used 3 entries,
+            2667 wiz_defined-function locations,
+            681 strings with 8212 characters,
+and the built_in function-call counts, 1626 in all, are:
+= -- 87
+> -- 76
+< -- 2
++ -- 54
+- -- 19
+* -- 105
+:= -- 192
+add.period$ -- 4
+call.type$ -- 3
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 3
+duplicate$ -- 136
+empty$ -- 121
+format.name$ -- 22
+if$ -- 323
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 50
+newline$ -- 71
+num.names$ -- 3
+pop$ -- 41
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 81
+stack$ -- 0
+substring$ -- 89
+swap$ -- 38
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 9
+width$ -- 4
+write$ -- 87
