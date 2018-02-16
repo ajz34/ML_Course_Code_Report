@@ -857,13 +857,13 @@ KRR 方法的耗时与误差没能打出。但在监视程序运行的过程中�
 
 在 \href{https://github.com/Microsoft/gated-graph-neural-network-samples}{Microsoft 的 Github} 上，除了上述的 \verb|chem_tensorflow_dense.py| 外，还有其它三个程序也能进行计算；但我曾经执行过两个，\verb|chem_tensorflow_sparse.py| 无法分配空间，\verb|chem_tensorflow_async.py| 用尽内存后报错（8 GB 内存，4 GB 显存与 4 GB Swap 空间）。
 
-\section{未尽事项}
+%\section{未尽事项}
 
-我本人的专业方向是量子化学中的电子结构，直博一年级学生。之前所完成的工作，主要是进行非自恰双杂化 DFT 方法（这两篇文章的机器学习方法所挑战的对象为杂化 DFT 方法）的学习、以及其性质结果的理论导出。事实上，对于机器学习在计算小分子性质上，做理论的人之所以会有所反感，我想是因为机器学习不是一个解释性的方法，而是归纳性的方法。因此，机器学习在理论界（特别是我的专业方向）不能指望会产生实质贡献，但在工程界也许会大放异彩。
+%我本人的专业方向是量子化学中的电子结构，直博一年级学生。之前所完成的工作，主要是进行非自恰双杂化 DFT 方法（这两篇文章的机器学习方法所挑战的对象为杂化 DFT 方法）的学习、以及其性质结果的理论导出。事实上，对于机器学习在计算小分子性质上，做理论的人之所以会有所反感，我想是因为机器学习不是一个解释性的方法，而是归纳性的方法。因此，机器学习在理论界（特别是我的专业方向）不能指望会产生实质贡献，但在工程界也许会大放异彩。
 
-Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}与 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章的标题确实夺人眼球。如果这项机器学习技术成熟，而高精度计算方法所计算得的数据集性质也产生之后，它可能对理论界有毁灭性的冲击——越来越少的人会期望用理论方法进行性质计算，因为理论方法的开发周期太长。同时，理论方法的实际根基通常就是基于 Hartree 或 Hartree-Fock 近似到真实 Schr\"odinger 方程的改进，而这个改进的过程或多或少有经验的成分在里面，谈不上是严格理论的。在这些理解下，我想我需要对这项技术有所了解。
+%Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}与 Faber \emph{et al.} (JCTC 2017)\citep{Faber-Lilienfeld.JCTC.2017.13}文章的标题确实夺人眼球。如果这项机器学习技术成熟，而高精度计算方法所计算得的数据集性质也产生之后，它可能对理论界有毁灭性的冲击——越来越少的人会期望用理论方法进行性质计算，因为理论方法的开发周期太长。同时，理论方法的实际根基通常就是基于 Hartree 或 Hartree-Fock 近似到真实 Schr\"odinger 方程的改进，而这个改进的过程或多或少有经验的成分在里面，谈不上是严格理论的。在这些理解下，我想我需要对这项技术有所了解。
 
-关于 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}的工作，我可能会持续关注与学习。不久后我将会在我的网站 \href{https://ajz34.github.io/post/Faber-Repetition/}{https://ajz34. github.io/post/Faber-Repetition/} 上传这部分的结果，并可能在将来更新这些内容。
+%关于 Gilmer \emph{et al.} (ICML 2017)\citep{Gilmer-Dahl.ICoML.2017.70}的工作，我可能会持续关注与学习。不久后我将会在我的网站 \href{https://ajz34.github.io/post/Faber-Repetition/}{https://ajz34. github.io/post/Faber-Repetition/} 上传这部分的结果，并可能在将来更新这些内容。
 
 \bibliography{./bib/Machine\string_Learning.bib}
 
